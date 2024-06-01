@@ -1,3 +1,4 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
@@ -25,7 +26,9 @@ export function SingUp() {
     register,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<SingUpForm>()
+  } = useForm<SingUpForm>({
+    resolver: zodResolver(singUpForm),
+  })
 
   const { mutateAsync: registerRestaurantFn } = useMutation({
     mutationFn: registerRestaurant,
@@ -52,7 +55,7 @@ export function SingUp() {
         },
       })
     } catch {
-      toast.error('Something wrong happen!')
+      toast.error('Something wrong happened!')
     }
   }
 
